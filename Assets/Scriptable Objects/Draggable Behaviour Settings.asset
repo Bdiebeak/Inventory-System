@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52edbd12ce87384f84b06bddee80a2c, type: 3}
   m_Name: Draggable Behaviour Settings
   m_EditorClassIdentifier: 
-  yDraggingValue: 1.75
+  yDraggingHeight: 2
   risingSpeed: 0.2
