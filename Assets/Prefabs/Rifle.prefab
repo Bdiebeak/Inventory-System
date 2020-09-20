@@ -793,6 +793,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6533226952209070635}
   - component: {fileID: 6533226952209070634}
+  - component: {fileID: 707512196}
   m_Layer: 0
   m_Name: Rifle
   m_TagString: Untagged
@@ -831,6 +832,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &707512196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6533226952209070637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebcad9087ab225a408a804d29eb1b9b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: a4f00768feb02a049a442868c08c029b, type: 2}
 --- !u!1 &6533226952384828906
 GameObject:
   m_ObjectHideFlags: 0
