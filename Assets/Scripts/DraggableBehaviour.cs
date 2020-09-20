@@ -11,9 +11,11 @@ using UnityEngine.Serialization;
 [RequireComponent(typeof(Rigidbody))]
 public class DraggableBehaviour : MonoBehaviour
 {
-    [Header("\tНастройки")] 
+    [Header("Настройки")] 
     [SerializeField]
     private DraggableBehaviourSettings settings = null;
+    
+    public bool IsDragged { get; private set; }
 
     private float _risingStep = 0;
 
@@ -33,21 +35,23 @@ public class DraggableBehaviour : MonoBehaviour
 
     private void OnMouseDown()
     {
-        TurnOnKinematic();
+       TurnOnKinematic();
+       
+       IsDragged = true;
     }
 
     private void OnMouseDrag()
     {
         var newPosition = CalculateNewObjectPosition();
-        
-        transform.position = Vector3.Lerp(transform.position, newPosition, _risingStep);
-        IncreaseStep();
+        SmoothDrag(newPosition);
     }
 
     private void OnMouseUp()
     {
         TurnOffKinematic();
         ResetStep();
+        
+        IsDragged = false;
     }
 
     private void TurnOnKinematic()
@@ -60,9 +64,15 @@ public class DraggableBehaviour : MonoBehaviour
         var objectScreenPositionZ = _mainCamera.WorldToScreenPoint(transform.position).z;
         var newScreenPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, objectScreenPositionZ);
         var newWorldPosition = _mainCamera.ScreenToWorldPoint(newScreenPosition);
-        newWorldPosition.y = settings.yDraggingValue;
+        newWorldPosition.y = settings.yDraggingHeight;
         
         return newWorldPosition;
+    }
+
+    private void SmoothDrag(Vector3 position)
+    {
+        transform.position = Vector3.Lerp(transform.position, position, _risingStep);
+        IncreaseStep();
     }
 
     private void IncreaseStep()
