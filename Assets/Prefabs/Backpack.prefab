@@ -180,7 +180,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'HANDGUN SLOT
+  m_Text: 'SECONDARY SLOT
 
 '
 --- !u!1 &276117910
@@ -334,7 +334,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: RIFLE SLOT
+  m_Text: PRIMARY SLOT
 --- !u!1 &756783158
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,7 +498,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1228825953}
   m_Layer: 0
-  m_Name: Backpack Items
+  m_Name: Backpack Contents Snap Points
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -534,7 +534,7 @@ GameObject:
   - component: {fileID: 1342243294}
   - component: {fileID: 1695880860218576552}
   m_Layer: 5
-  m_Name: Handgun Weapon Slot
+  m_Name: Secondary Weapon Slot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -555,10 +555,10 @@ RectTransform:
   m_Father: {fileID: 80800411}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 185, y: -224.99998}
+  m_SizeDelta: {x: 350, y: 136.66666}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1342243295
 CanvasRenderer:
@@ -728,12 +728,12 @@ GameObject:
   - component: {fileID: 1620019982}
   - component: {fileID: 1620019981}
   m_Layer: 5
-  m_Name: Backpack Canvas
+  m_Name: Backpack Contents UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1620019984
 RectTransform:
   m_ObjectHideFlags: 0
@@ -827,7 +827,7 @@ GameObject:
   - component: {fileID: 1655194501}
   - component: {fileID: 1655194500}
   m_Layer: 5
-  m_Name: Backpack Access Canvas
+  m_Name: Backpack Access Bar UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -846,7 +846,7 @@ RectTransform:
   m_Children:
   - {fileID: 276117911}
   m_Father: {fileID: 8558543523652142748}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -947,10 +947,10 @@ RectTransform:
   m_Father: {fileID: 80800411}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 185, y: -371.66663}
+  m_SizeDelta: {x: 350, y: 136.66666}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1762692677
 CanvasRenderer:
@@ -1120,7 +1120,7 @@ GameObject:
   - component: {fileID: 2085698797}
   - component: {fileID: 1695880859483534227}
   m_Layer: 5
-  m_Name: Rifle Weapon Slot
+  m_Name: Primary Weapon Slot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1141,10 +1141,10 @@ RectTransform:
   m_Father: {fileID: 80800411}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 185, y: -78.33333}
+  m_SizeDelta: {x: 350, y: 136.66666}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2085698798
 CanvasRenderer:
@@ -1379,7 +1379,7 @@ Transform:
   - {fileID: 1695880859616774512}
   - {fileID: 7894290334926355508}
   m_Father: {fileID: 8558543523652142748}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6533226951670630806
 GameObject:
@@ -1442,8 +1442,8 @@ Transform:
   m_Children:
   - {fileID: 1228825953}
   - {fileID: 1620019984}
-  - {fileID: 6300800375703705405}
   - {fileID: 1655194499}
+  - {fileID: 6300800375703705405}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 40, z: 0}
@@ -1475,9 +1475,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39ebf52e7c992734c8d1b2d306530167, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIgo: {fileID: 1620019980}
-  AccessUIgo: {fileID: 276117912}
-  timeToAccess: 0.5
+  contentsUI: {fileID: 1620019980}
+  accessBar: {fileID: 276117912}
+  timeToAccessContents: 0.5
 --- !u!1 &8362479309318797699
 GameObject:
   m_ObjectHideFlags: 0
