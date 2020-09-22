@@ -788,7 +788,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1342243294}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 154616426346799562}
+        m_MethodName: UnsnapWeapon
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1464126901
 GameObject:
   m_ObjectHideFlags: 0
@@ -1255,7 +1266,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1762692676}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 154616426346799562}
+        m_MethodName: UnsnapWeapon
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1990859809
 GameObject:
   m_ObjectHideFlags: 0
@@ -1450,7 +1472,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2085698797}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 154616426346799562}
+        m_MethodName: UnsnapWeapon
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1695880859616774524
 GameObject:
   m_ObjectHideFlags: 0
@@ -1650,6 +1683,7 @@ GameObject:
   - component: {fileID: 5048251943054548019}
   - component: {fileID: 545427385}
   - component: {fileID: 9196572465075924923}
+  - component: {fileID: 154616426346799562}
   m_Layer: 0
   m_Name: Backpack
   m_TagString: Untagged
@@ -1665,7 +1699,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7505305155245072579}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 3}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1228825953}
@@ -1747,7 +1781,23 @@ MonoBehaviour:
   - {fileID: 1464126903}
   emptyIcon: {fileID: 21300000, guid: 4caaa4816b4af624db485b076752be4b, type: 3}
   accessBar: {fileID: 276117912}
-  timeToAccessContents: 0.5
+  timeToAccessContents: 0.25
+--- !u!114 &154616426346799562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7505305155245072579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ca198f4fbc45594388658108024cb58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  snapPoints:
+  - {fileID: 6533226951670630800}
+  - {fileID: 3741465894358412285}
+  - {fileID: 8837285635117015601}
 --- !u!1 &8362479309318797699
 GameObject:
   m_ObjectHideFlags: 0
