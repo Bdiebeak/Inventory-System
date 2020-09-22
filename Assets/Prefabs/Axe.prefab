@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4296004212876788866}
   - component: {fileID: 4296004212876788867}
   - component: {fileID: 4700105877555177796}
+  - component: {fileID: 1574811643}
   m_Layer: 0
   m_Name: Axe
   m_TagString: Untagged
@@ -62,6 +63,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: a4f00768feb02a049a442868c08c029b, type: 2}
+--- !u!114 &1574811643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4296004212876788876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05bef93ffd8018c4bbd3eac0027886b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponSettings: {fileID: 11400000, guid: c679496ab9aefee4ea8e51a2c6265c4c, type: 2}
 --- !u!1 &4296004212948970916
 GameObject:
   m_ObjectHideFlags: 0
