@@ -3,40 +3,51 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider), typeof(BackpackContents))]
-public class BackpackDragAndDropControl : MonoBehaviour
+[RequireComponent(typeof(BackpackContents),typeof(BoxCollider))]
+public class BackpackDragAndDropContents : MonoBehaviour
 {
     private BackpackContents _backpackContents;
     
     private GameObject _currentGameObjectInTrigger;
     private DragAndDropBehaviour _currentDragAndDropBehaviour;
+    private bool _subscribed = false;
     
     private void Reset()
     {
         GetComponent<BoxCollider>().isTrigger = true;
     }
 
-    private void Start()
+    private void Awake()
     {
         _backpackContents = GetComponent<BackpackContents>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        var enteringGameObject = other.attachedRigidbody?.gameObject;
-
-        if (enteringGameObject == null ||
-            enteringGameObject?.GetComponent<DragAndDropBehaviour>()?.IsDragged == false ||
-            enteringGameObject?.GetComponent<Weapon>() == null ||
-            _currentGameObjectInTrigger == enteringGameObject)
+        var stayingGameObject = other.attachedRigidbody?.gameObject;
+        
+        if (stayingGameObject == null ||
+            stayingGameObject?.GetComponent<DragAndDropBehaviour>()?.IsDragged == false ||
+            stayingGameObject?.GetComponent<Weapon>() == null ||
+            _currentGameObjectInTrigger == stayingGameObject)
         {
             return;
         }
 
-        _currentGameObjectInTrigger = enteringGameObject;
+        ResetCurrentObject();
+        
+        _currentGameObjectInTrigger = stayingGameObject;
         _currentDragAndDropBehaviour = _currentGameObjectInTrigger.GetComponent<DragAndDropBehaviour>();
-
+        
+        TakeFromBackpack();
+        
+        if (_subscribed)
+        {
+            return;
+        }
+        
         _currentDragAndDropBehaviour.OnDrop += AddToBackpack;
+        _subscribed = true;
     }
 
     private void AddToBackpack()
@@ -65,7 +76,11 @@ public class BackpackDragAndDropControl : MonoBehaviour
 
     private void ResetCurrentObject()
     {
-        _currentDragAndDropBehaviour.OnDrop -= AddToBackpack;
+        if (_currentDragAndDropBehaviour != null)
+        {
+            _currentDragAndDropBehaviour.OnDrop -= AddToBackpack;
+        }
+        _subscribed = false;
         _currentDragAndDropBehaviour = null;
         _currentGameObjectInTrigger = null;
     }

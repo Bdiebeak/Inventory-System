@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody), typeof(BackpackContents))]
-public class BackpackUI : MonoBehaviour
+public class BackpackContentsUI : MonoBehaviour
 {
     [Tooltip("UI, отображающий содержимое рюкзака.")]
     [SerializeField]
@@ -20,7 +20,7 @@ public class BackpackUI : MonoBehaviour
 
     [Tooltip("Иконка, которая будет отображаться в качестве пустого слота оружия.")]
     [SerializeField] 
-    private Sprite emptyIcon;
+    private Sprite emptyIcon = null;
     
     [Header("Параметры активации содержимого")]
     [Tooltip("Image с режимом Filled, отображающее получение доступа к " +
@@ -32,8 +32,6 @@ public class BackpackUI : MonoBehaviour
              "для получения доступа к его содержимому.")]
     [SerializeField]
     private float timeToAccessContents = 0.5f;
-
-    private readonly int _imagesArraySize = Enum.GetNames(typeof(WeaponType)).Length;
     
     private bool _accessEnabled;
     private float _currentTime;
@@ -55,7 +53,7 @@ public class BackpackUI : MonoBehaviour
         }
         _eventSystem = FindObjectOfType<EventSystem>();
     }
-
+    
     private void OnEnable()
     {
         _backpackContents.OnWeaponAdd += WeaponAddHandler;
@@ -70,20 +68,22 @@ public class BackpackUI : MonoBehaviour
 
     private void WeaponAddHandler(Weapon weapon)
     {
-        contentsImages[(int) weapon.weaponSettings.type].sprite = weapon.weaponSettings.icon;
+        contentsImages[weapon.GetWeaponTypeIndex()].sprite = weapon.weaponSettings.icon;
     }
     
     private void WeaponRemoveHandler(Weapon weapon)
     {
-        contentsImages[(int) weapon.weaponSettings.type].sprite = emptyIcon;
+        contentsImages[weapon.GetWeaponTypeIndex()].sprite = emptyIcon;
     }
 
     private void OnValidate()
     {
-        if (contentsImages.Length != _imagesArraySize)
-        {
-            Array.Resize(ref contentsImages, _imagesArraySize);
-        }
+        Array.Resize(ref contentsImages, GetComponent<BackpackContents>().contentsSize);
+    }
+    
+    private void Reset()
+    {
+        Array.Resize(ref contentsImages, GetComponent<BackpackContents>().contentsSize);
     }
 
     private void OnMouseDown()
@@ -115,7 +115,12 @@ public class BackpackUI : MonoBehaviour
     private void OnMouseUp()
     {
         var button = TryFindButton();
-        button?.onClick.Invoke();
+
+        if (button != null)
+        {
+            button.onClick.Invoke();
+            
+        }
 
         HideBackpackUI();
         
