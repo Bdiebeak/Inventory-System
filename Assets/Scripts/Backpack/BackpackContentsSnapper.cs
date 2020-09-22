@@ -25,13 +25,13 @@ public class BackpackContentsSnapper : MonoBehaviour
     private void OnEnable()
     {
         _backpackContents.OnWeaponAdd += SnapWeapon;
-        _backpackContents.OnWeaponRemove += UnsnapWeapon;
+        _backpackContents.OnWeaponTake += UnsnapWeapon;
     }
 
     private void OnDisable()
     {
         _backpackContents.OnWeaponAdd -= SnapWeapon;
-        _backpackContents.OnWeaponRemove -= UnsnapWeapon;
+        _backpackContents.OnWeaponTake -= UnsnapWeapon;
     }
 
     private void SnapWeapon(Weapon weapon)

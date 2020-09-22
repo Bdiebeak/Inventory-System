@@ -57,13 +57,13 @@ public class BackpackContentsUI : MonoBehaviour
     private void OnEnable()
     {
         _backpackContents.OnWeaponAdd += WeaponAddHandler;
-        _backpackContents.OnWeaponRemove += WeaponRemoveHandler;
+        _backpackContents.OnWeaponTake += WeaponTakeHandler;
     }
 
     private void OnDisable()
     {
         _backpackContents.OnWeaponAdd -= WeaponAddHandler;
-        _backpackContents.OnWeaponRemove -= WeaponRemoveHandler;
+        _backpackContents.OnWeaponTake -= WeaponTakeHandler;
     }
 
     private void WeaponAddHandler(Weapon weapon)
@@ -71,7 +71,7 @@ public class BackpackContentsUI : MonoBehaviour
         contentsImages[weapon.GetWeaponTypeIndex()].sprite = weapon.weaponSettings.icon;
     }
     
-    private void WeaponRemoveHandler(Weapon weapon)
+    private void WeaponTakeHandler(Weapon weapon)
     {
         contentsImages[weapon.GetWeaponTypeIndex()].sprite = emptyIcon;
     }
