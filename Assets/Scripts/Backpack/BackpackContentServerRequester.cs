@@ -35,21 +35,21 @@ namespace Backpack
     
         private void OnWeaponAddHandler(Weapon weapon)
         {
-            WWWForm form = CreateForm(weapon.weaponСharacteristic.id, "add");
+            var addWeaponForm = CreateForm(weapon.weaponСharacteristic.id, "add");
         
-            StartCoroutine(Upload(form));
+            StartCoroutine(Upload(addWeaponForm));
         }
     
         private void OnWeaponTakeHandler(Weapon weapon)
         {
-            WWWForm form = CreateForm(weapon.weaponСharacteristic.id, "take");
+            var takeWeaponForm = CreateForm(weapon.weaponСharacteristic.id, "take");
         
-            StartCoroutine(Upload(form));
+            StartCoroutine(Upload(takeWeaponForm));
         }
 
         private WWWForm CreateForm(int weaponID, string eventType)
         {
-            WWWForm form = new WWWForm();
+            var form = new WWWForm();
             form.AddField("weapon_id", weaponID);
             form.AddField("event_type", eventType);
 
@@ -58,18 +58,14 @@ namespace Backpack
 
         private IEnumerator Upload(WWWForm addedForm)
         {
-            UnityWebRequest www = UnityWebRequest.Post(_address, addedForm);
-            www.SetRequestHeader("auth", _authKey);
+            var request = UnityWebRequest.Post(_address, addedForm);
+            request.SetRequestHeader("Authorization", _authKey);
         
-            yield return www.SendWebRequest();
+            yield return request.SendWebRequest();
 
-            if (www.isNetworkError || www.isHttpError)
+            if (request.isNetworkError || request.isHttpError)
             {
                 Debug.LogError("Upload error.");
-            }
-            else
-            {
-                Debug.Log("Suc");
             }
         }
     }
