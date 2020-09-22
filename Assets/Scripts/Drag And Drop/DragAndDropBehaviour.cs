@@ -12,7 +12,6 @@ using UnityEngine.Serialization;
 [RequireComponent(typeof(Rigidbody))]
 public class DragAndDropBehaviour : MonoBehaviour
 {
-    [Header("Настройки")] 
     [SerializeField]
     private DragAndDropSettings settings = null;
     
@@ -24,7 +23,7 @@ public class DragAndDropBehaviour : MonoBehaviour
     private Camera _mainCamera;
     private Rigidbody _rigidbody;
 
-    private void Start()
+    private void Awake()
     {
         if (settings == null)
         {
