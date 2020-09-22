@@ -16,3 +16,4 @@ MonoBehaviour:
   weight: 2
   id: 2
   type: 2
+  icon: {fileID: 21300000, guid: a80f3f7de84a4dc4d811a59a8a945fa7, type: 3}
