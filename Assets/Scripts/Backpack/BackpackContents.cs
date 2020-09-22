@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BackpackContents : MonoBehaviour
 {
@@ -10,7 +11,9 @@ public class BackpackContents : MonoBehaviour
     private Weapon[] _contents;
     
     public event Action<Weapon> OnWeaponAdd;
-    public event Action<Weapon> OnWeaponRemove;
+    public UnityEvent WeaponAddEvent;
+    public event Action<Weapon> OnWeaponTake;
+    public UnityEvent WeaponTakeEvent;
 
     private void Awake()
     {
@@ -28,6 +31,7 @@ public class BackpackContents : MonoBehaviour
         _contents[weapon.GetWeaponTypeIndex()] = weapon;
         
         OnWeaponAdd?.Invoke(weapon);
+        WeaponAddEvent?.Invoke();
     }
 
     public void TryTakeWeapon(Weapon weapon)
@@ -40,7 +44,8 @@ public class BackpackContents : MonoBehaviour
 
         _contents[weapon.GetWeaponTypeIndex()] = null;
      
-        OnWeaponRemove?.Invoke(weapon);
+        OnWeaponTake?.Invoke(weapon);
+        WeaponTakeEvent?.Invoke();
     }
 
     public void TakeWeapon(int index)
