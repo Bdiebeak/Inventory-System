@@ -2,6 +2,9 @@
 
 namespace DragAndDrop
 {
+    /// <summary>
+    /// Scriptable Object настроек для поведения Drag And Drop.
+    /// </summary>
     [CreateAssetMenu(fileName = "DB Settings", menuName = "Drag And Drop/Create New Settings")]
     public class DragAndDropSettings : ScriptableObject
     {

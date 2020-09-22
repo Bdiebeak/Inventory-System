@@ -11,14 +11,14 @@ namespace DragAndDrop
     [RequireComponent(typeof(Rigidbody))]
     public class DragAndDropBehaviour : MonoBehaviour
     {
+        [Tooltip("Scriptable Object настроек для Drag And Drop.")]
         [SerializeField]
         private DragAndDropSettings settings = null;
     
         public bool IsDragged { get; private set; }
         public event Action OnDrop; 
 
-        private float _risingStep = 0;
-
+        private float _risingStep;
         private Camera _mainCamera;
         private Rigidbody _rigidbody;
 
@@ -63,6 +63,11 @@ namespace DragAndDrop
         {
             _rigidbody.isKinematic = true;
         }
+
+        private void TurnOffKinematic()
+        {
+            _rigidbody.isKinematic = false;
+        }
     
         private Vector3 CalculateNewObjectPosition()
         {
@@ -83,11 +88,6 @@ namespace DragAndDrop
         private void IncreaseStep()
         {
             _risingStep += settings.risingSpeed * Time.deltaTime;
-        }
-
-        private void TurnOffKinematic()
-        {
-            _rigidbody.isKinematic = false;
         }
 
         private void ResetStep()

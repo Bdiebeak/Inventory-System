@@ -35,14 +35,14 @@ namespace Backpack
     
         private void OnWeaponAddHandler(Weapon weapon)
         {
-            WWWForm form = CreateForm(weapon.weaponSettings.id, "add");
+            WWWForm form = CreateForm(weapon.weaponСharacteristic.id, "add");
         
             StartCoroutine(Upload(form));
         }
     
         private void OnWeaponTakeHandler(Weapon weapon)
         {
-            WWWForm form = CreateForm(weapon.weaponSettings.id, "take");
+            WWWForm form = CreateForm(weapon.weaponСharacteristic.id, "take");
         
             StartCoroutine(Upload(form));
         }
@@ -66,6 +66,10 @@ namespace Backpack
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.LogError("Upload error.");
+            }
+            else
+            {
+                Debug.Log("Suc");
             }
         }
     }

@@ -83,7 +83,7 @@ namespace Backpack
 
         private void OnWeaponAddHandler(Weapon weapon)
         {
-            contentsImages[weapon.GetWeaponTypeIndex()].sprite = weapon.weaponSettings.icon;
+            contentsImages[weapon.GetWeaponTypeIndex()].sprite = weapon.weaponСharacteristic.icon;
         }
     
         private void OnWeaponTakeHandler(Weapon weapon)

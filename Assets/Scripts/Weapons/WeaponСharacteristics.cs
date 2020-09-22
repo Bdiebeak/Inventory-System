@@ -2,8 +2,11 @@
 
 namespace Weapons
 {
+    /// <summary>
+    /// Scriptable Object характеристик для оружий.
+    /// </summary>
     [CreateAssetMenu(fileName = "New Weapon", menuName = "Weapons/Create New Weapon")]
-    public class WeaponSettings : ScriptableObject
+    public class WeaponСharacteristics : ScriptableObject
     {
         public new string name;
         public float weight;

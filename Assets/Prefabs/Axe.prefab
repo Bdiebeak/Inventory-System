@@ -75,7 +75,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05bef93ffd8018c4bbd3eac0027886b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponSettings: {fileID: 11400000, guid: c679496ab9aefee4ea8e51a2c6265c4c, type: 2}
+  "weapon\u0421haracteristic": {fileID: 11400000, guid: c679496ab9aefee4ea8e51a2c6265c4c,
+    type: 2}
 --- !u!1 &4296004212948970916
 GameObject:
   m_ObjectHideFlags: 0

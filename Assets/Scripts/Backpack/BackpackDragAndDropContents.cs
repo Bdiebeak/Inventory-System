@@ -54,6 +54,18 @@ namespace Backpack
             _subscribed = true;
         }
 
+        private void OnTriggerExit(Collider other)
+        {
+            var exitingGameObject = other.attachedRigidbody?.gameObject;
+            if ((exitingGameObject == null) || (_currentGameObjectInTrigger != exitingGameObject))
+            {
+                return;
+            }
+
+            TakeFromBackpack();
+            ResetCurrentObject();
+        }
+        
         private void OnDropHandler()
         {
             AddToBackpack();
@@ -71,24 +83,13 @@ namespace Backpack
             _backpackContents.TryTakeWeapon(_currentGameObjectInTrigger.GetComponent<Weapon>());
         }
 
-        private void OnTriggerExit(Collider other)
-        {
-            var exitingGameObject = other.attachedRigidbody?.gameObject;
-            if ((exitingGameObject == null) || (_currentGameObjectInTrigger != exitingGameObject))
-            {
-                return;
-            }
-
-            TakeFromBackpack();
-            ResetCurrentObject();
-        }
-
         private void ResetCurrentObject()
         {
             if (_currentDragAndDropBehaviour != null)
             {
                 _currentDragAndDropBehaviour.OnDrop -= OnDropHandler;
             }
+            
             _subscribed = false;
             _currentDragAndDropBehaviour = null;
             _currentGameObjectInTrigger = null;
