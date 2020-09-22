@@ -1684,6 +1684,7 @@ GameObject:
   - component: {fileID: 545427385}
   - component: {fileID: 9196572465075924923}
   - component: {fileID: 154616426346799562}
+  - component: {fileID: 1789979321211134078}
   m_Layer: 0
   m_Name: Backpack
   m_TagString: Untagged
@@ -1750,6 +1751,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2a79a594d294744a97ce4523a0d24aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WeaponAddEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  WeaponTakeEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &545427385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1799,6 +1806,18 @@ MonoBehaviour:
   - {fileID: 6533226951670630800}
   - {fileID: 3741465894358412285}
   - {fileID: 8837285635117015601}
+--- !u!114 &1789979321211134078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7505305155245072579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344d4ff83948ffd46af23e2301be45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8362479309318797699
 GameObject:
   m_ObjectHideFlags: 0
