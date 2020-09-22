@@ -789,8 +789,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 154616426346799562}
-        m_MethodName: UnsnapWeapon
+      - m_Target: {fileID: 5048251943054548019}
+        m_MethodName: TryTakeWeapon
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1267,8 +1267,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 154616426346799562}
-        m_MethodName: UnsnapWeapon
+      - m_Target: {fileID: 5048251943054548019}
+        m_MethodName: TryTakeWeapon
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1473,8 +1473,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 154616426346799562}
-        m_MethodName: UnsnapWeapon
+      - m_Target: {fileID: 5048251943054548019}
+        m_MethodName: TryTakeWeapon
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

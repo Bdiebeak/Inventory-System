@@ -1,6 +1,9 @@
-﻿public enum WeaponType
+﻿namespace Weapons
 {
-   Primary,
-   Secondary,
-   Melee
+   public enum WeaponType
+   {
+      Primary,
+      Secondary,
+      Melee
+   }
 }

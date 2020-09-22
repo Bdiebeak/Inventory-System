@@ -1,162 +1,174 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Weapons;
 
-[RequireComponent(typeof(Rigidbody), typeof(BackpackContents))]
-public class BackpackContentsUI : MonoBehaviour
+namespace Backpack
 {
-    [Tooltip("UI, отображающий содержимое рюкзака.")]
-    [SerializeField]
-    private GameObject contentsUI = null;
-
-    [Header("Параметры отображения содержимого")]
-    [Tooltip("Список UI-Image для отображения иконок объектов.")]
-    [SerializeField]
-    private Image[] contentsImages;
-
-    [Tooltip("Иконка, которая будет отображаться в качестве пустого слота оружия.")]
-    [SerializeField] 
-    private Sprite emptyIcon = null;
-    
-    [Header("Параметры активации содержимого")]
-    [Tooltip("Image с режимом Filled, отображающее получение доступа к " +
-             "содержимому рюкзака при удержании на нем ЛКМ.")]
-    [SerializeField]
-    private Image accessBar = null;
-    
-    [Tooltip("Время, в течении которого нужно удерживать ЛКМ на рюкзаке " +
-             "для получения доступа к его содержимому.")]
-    [SerializeField]
-    private float timeToAccessContents = 0.5f;
-    
-    private bool _accessEnabled;
-    private float _currentTime;
-    private float _requiredTime;
-
-    private BackpackContents _backpackContents;
-
-    private GraphicRaycaster _graphicRaycaster;
-    private EventSystem _eventSystem;
-
-    private void Awake()
+    /// <summary>
+    /// Класс, отвечающий за работу UI рюкзака.
+    /// </summary>
+    [RequireComponent(typeof(Rigidbody), typeof(BackpackContents))]
+    public class BackpackContentsUI : MonoBehaviour
     {
-        _backpackContents = GetComponent<BackpackContents>();
+        [Tooltip("UI, отображающий содержимое рюкзака.")]
+        [SerializeField]
+        private GameObject contentsUI = null;
+
+        [Header("Параметры отображения содержимого")]
+        [Tooltip("Список UI-Image для отображения иконок объектов.")]
+        [SerializeField]
+        private Image[] contentsImages;
+
+        [Tooltip("Иконка, которая будет отображаться в качестве пустого слота оружия.")]
+        [SerializeField] 
+        private Sprite emptyIcon = null;
+    
+        [Header("Параметры активации содержимого")]
+        [Tooltip("Image с режимом Filled, отображающее получение доступа к " +
+                 "содержимому рюкзака при удержании на нем ЛКМ.")]
+        [SerializeField]
+        private Image accessBar = null;
+    
+        [Tooltip("Время, в течении которого нужно удерживать ЛКМ на рюкзаке " +
+                 "для получения доступа к его содержимому.")]
+        [SerializeField]
+        private float timeToAccessContents = 0.5f;
+    
+        private bool _accessEnabled;
+        private float _currentTime;
+        private float _requiredTime;
+
+        private BackpackContents _backpackContents;
+
+        private GraphicRaycaster _graphicRaycaster;
+        private EventSystem _eventSystem;
         
-        _graphicRaycaster = contentsUI.GetComponent<GraphicRaycaster>();
-        if (_graphicRaycaster == null)
+        private void OnValidate()
         {
-            _graphicRaycaster = contentsUI.AddComponent<GraphicRaycaster>();
+            Array.Resize(ref contentsImages, GetComponent<BackpackContents>().contentsSize);
         }
-        _eventSystem = FindObjectOfType<EventSystem>();
-    }
     
-    private void OnEnable()
-    {
-        _backpackContents.OnWeaponAdd += WeaponAddHandler;
-        _backpackContents.OnWeaponTake += WeaponTakeHandler;
-    }
-
-    private void OnDisable()
-    {
-        _backpackContents.OnWeaponAdd -= WeaponAddHandler;
-        _backpackContents.OnWeaponTake -= WeaponTakeHandler;
-    }
-
-    private void WeaponAddHandler(Weapon weapon)
-    {
-        contentsImages[weapon.GetWeaponTypeIndex()].sprite = weapon.weaponSettings.icon;
-    }
-    
-    private void WeaponTakeHandler(Weapon weapon)
-    {
-        contentsImages[weapon.GetWeaponTypeIndex()].sprite = emptyIcon;
-    }
-
-    private void OnValidate()
-    {
-        Array.Resize(ref contentsImages, GetComponent<BackpackContents>().contentsSize);
-    }
-    
-    private void Reset()
-    {
-        Array.Resize(ref contentsImages, GetComponent<BackpackContents>().contentsSize);
-    }
-
-    private void OnMouseDown()
-    {
-        InitializeAccessTimer();
-    }
-
-    private void OnMouseDrag()
-    {
-        if (_accessEnabled)
+        private void Reset()
         {
-            ShowBackpackUI();
+            Array.Resize(ref contentsImages, GetComponent<BackpackContents>().contentsSize);
         }
-        else
+
+        private void Awake()
         {
-            if (_currentTime < _requiredTime)
+            _backpackContents = GetComponent<BackpackContents>();
+        
+            _graphicRaycaster = contentsUI.GetComponent<GraphicRaycaster>();
+            if (_graphicRaycaster == null)
             {
-                _currentTime += Time.deltaTime;
-                accessBar.fillAmount = 1 - (_requiredTime - _currentTime) / timeToAccessContents;
+                _graphicRaycaster = contentsUI.AddComponent<GraphicRaycaster>();
+            }
+            _eventSystem = FindObjectOfType<EventSystem>();
+        }
+    
+        private void OnEnable()
+        {
+            _backpackContents.OnWeaponAdd += OnWeaponAddHandler;
+            _backpackContents.OnWeaponTake += OnWeaponTakeHandler;
+        }
+
+        private void OnDisable()
+        {
+            _backpackContents.OnWeaponAdd -= OnWeaponAddHandler;
+            _backpackContents.OnWeaponTake -= OnWeaponTakeHandler;
+        }
+
+        private void OnWeaponAddHandler(Weapon weapon)
+        {
+            contentsImages[weapon.GetWeaponTypeIndex()].sprite = weapon.weaponSettings.icon;
+        }
+    
+        private void OnWeaponTakeHandler(Weapon weapon)
+        {
+            contentsImages[weapon.GetWeaponTypeIndex()].sprite = emptyIcon;
+        }
+
+        private void OnMouseDown()
+        {
+            InitializeAccessTimer();
+        }
+        
+        private void InitializeAccessTimer()
+        {
+            _currentTime = Time.time;
+            _requiredTime = Time.time + timeToAccessContents;
+        }
+
+        private void OnMouseDrag()
+        {
+            if (_accessEnabled)
+            {
+                ShowBackpackUI();
             }
             else
             {
-                _accessEnabled = true;
-                accessBar.fillAmount = 1f;
+                if (_currentTime < _requiredTime)
+                {
+                    _currentTime += Time.deltaTime;
+                    accessBar.fillAmount = 1 - (_requiredTime - _currentTime) / timeToAccessContents;
+                }
+                else
+                {
+                    AllowAccess();
+                }
             }
         }
-    }
 
-    private void OnMouseUp()
-    {
-        var button = TryFindButton();
-
-        if (button != null)
+        private void ShowBackpackUI()
         {
-            button.onClick.Invoke();
-            
+            contentsUI.SetActive(true);
+        }
+        
+        
+        private void AllowAccess()
+        {
+            _accessEnabled = true;
+            accessBar.fillAmount = 1f;
         }
 
-        HideBackpackUI();
+        private void OnMouseUp()
+        {
+            var button = TryFindButton();
+            if (button != null)
+            {
+                button.onClick.Invoke();
+            }
+
+            HideBackpackUI();
         
-        ResetAccess();
-        accessBar.fillAmount = 0f;
-    }
-    private void ShowBackpackUI()
-    {
-        contentsUI.SetActive(true);
-    }
+            ResetAccess();
+        }
 
-    private Button TryFindButton()
-    {
-        var pointerEventData = new PointerEventData(_eventSystem) {position = Input.mousePosition};
-        var raycastResults = new List<RaycastResult>();
+        private Button TryFindButton()
+        {
+            var pointerEventData = new PointerEventData(_eventSystem) {position = Input.mousePosition};
+            var raycastResults = new List<RaycastResult>();
 
-        _graphicRaycaster.Raycast(pointerEventData, raycastResults);
+            _graphicRaycaster.Raycast(pointerEventData, raycastResults);
 
-        return raycastResults.Select(result => result.gameObject.GetComponent<Button>())
-                             .FirstOrDefault(button => button != null);
-    }
+            return raycastResults.Select(result => result.gameObject.GetComponent<Button>())
+                .FirstOrDefault(button => button != null);
+        }
     
-    private void HideBackpackUI()
-    {
-        contentsUI.SetActive(false);
-    }
-    
-    private void InitializeAccessTimer()
-    {
-        _currentTime = Time.time;
-        _requiredTime = Time.time + timeToAccessContents;
-    }
+        private void HideBackpackUI()
+        {
+            contentsUI.SetActive(false);
+        }
 
-    private void ResetAccess()
-    {
-        _currentTime = 0;
-        _accessEnabled = false;
+        private void ResetAccess()
+        {
+            _accessEnabled = false;
+            
+            _currentTime = 0;
+            accessBar.fillAmount = 0f;
+        }
     }
 }

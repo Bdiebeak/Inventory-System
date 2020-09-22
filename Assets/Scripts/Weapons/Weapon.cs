@@ -1,22 +1,22 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Weapon : MonoBehaviour
+namespace Weapons
 {
-    public WeaponSettings weaponSettings;
-
-    private void Awake()
+    public class Weapon : MonoBehaviour
     {
-        if (weaponSettings == null)
+        public WeaponSettings weaponSettings;
+
+        private void Awake()
         {
-            Debug.LogError($"{gameObject.name} не назначены настройки.");
+            if (weaponSettings == null)
+            {
+                Debug.LogError($"{gameObject.name} не назначены настройки.");
+            }
         }
-    }
 
-    public int GetWeaponTypeIndex()
-    {
-        return (int) weaponSettings.type;
+        public int GetWeaponTypeIndex()
+        {
+            return (int) weaponSettings.type;
+        }
     }
 }

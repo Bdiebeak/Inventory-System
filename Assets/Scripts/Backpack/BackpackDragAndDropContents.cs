@@ -1,87 +1,97 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using DragAndDrop;
 using UnityEngine;
+using Weapons;
 
-[RequireComponent(typeof(BackpackContents),typeof(BoxCollider))]
-public class BackpackDragAndDropContents : MonoBehaviour
+namespace Backpack
 {
-    private BackpackContents _backpackContents;
+    /// <summary>
+    /// Класс, отвечающий за добавление/взятие объектов в/из рюкзака по средствам Drag And Drop.
+    /// </summary>
+    [RequireComponent(typeof(BackpackContents),typeof(BoxCollider))]
+    public class BackpackDragAndDropContents : MonoBehaviour
+    {
+        private BackpackContents _backpackContents;
     
-    private GameObject _currentGameObjectInTrigger;
-    private DragAndDropBehaviour _currentDragAndDropBehaviour;
-    private bool _subscribed = false;
+        private GameObject _currentGameObjectInTrigger;
+        private DragAndDropBehaviour _currentDragAndDropBehaviour;
+        private bool _subscribed = false;
     
-    private void Reset()
-    {
-        GetComponent<BoxCollider>().isTrigger = true;
-    }
-
-    private void Awake()
-    {
-        _backpackContents = GetComponent<BackpackContents>();
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        var stayingGameObject = other.attachedRigidbody?.gameObject;
-        
-        if (stayingGameObject == null ||
-            stayingGameObject?.GetComponent<DragAndDropBehaviour>()?.IsDragged == false ||
-            stayingGameObject?.GetComponent<Weapon>() == null ||
-            _currentGameObjectInTrigger == stayingGameObject)
+        private void Reset()
         {
-            return;
+            GetComponent<BoxCollider>().isTrigger = true;
         }
 
-        ResetCurrentObject();
-        
-        _currentGameObjectInTrigger = stayingGameObject;
-        _currentDragAndDropBehaviour = _currentGameObjectInTrigger.GetComponent<DragAndDropBehaviour>();
-        
-        TakeFromBackpack();
-        
-        if (_subscribed)
+        private void Awake()
         {
-            return;
-        }
-        
-        _currentDragAndDropBehaviour.OnDrop += AddToBackpack;
-        _subscribed = true;
-    }
-
-    private void AddToBackpack()
-    {
-        _backpackContents.TryAddWeapon(_currentGameObjectInTrigger.GetComponent<Weapon>());
-
-        ResetCurrentObject();
-    }
-
-    private void TakeFromBackpack()
-    {
-        _backpackContents.TryTakeWeapon(_currentGameObjectInTrigger.GetComponent<Weapon>());
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        var exitingGameObject = other.attachedRigidbody?.gameObject;
-        if ((exitingGameObject == null) || (_currentGameObjectInTrigger != exitingGameObject))
-        {
-            return;
+            _backpackContents = GetComponent<BackpackContents>();
         }
 
-        TakeFromBackpack();
-        ResetCurrentObject();
-    }
-
-    private void ResetCurrentObject()
-    {
-        if (_currentDragAndDropBehaviour != null)
+        private void OnTriggerStay(Collider other)
         {
-            _currentDragAndDropBehaviour.OnDrop -= AddToBackpack;
+            var stayingGameObject = other.attachedRigidbody?.gameObject;
+        
+            if (stayingGameObject == null ||
+                stayingGameObject?.GetComponent<DragAndDropBehaviour>()?.IsDragged == false ||
+                stayingGameObject?.GetComponent<Weapon>() == null ||
+                _currentGameObjectInTrigger == stayingGameObject)
+            {
+                return;
+            }
+
+            ResetCurrentObject();
+        
+            _currentGameObjectInTrigger = stayingGameObject;
+            _currentDragAndDropBehaviour = _currentGameObjectInTrigger.GetComponent<DragAndDropBehaviour>();
+        
+            TakeFromBackpack();
+        
+            if (_subscribed)
+            {
+                return;
+            }
+        
+            _currentDragAndDropBehaviour.OnDrop += OnDropHandler;
+            _subscribed = true;
         }
-        _subscribed = false;
-        _currentDragAndDropBehaviour = null;
-        _currentGameObjectInTrigger = null;
+
+        private void OnDropHandler()
+        {
+            AddToBackpack();
+        }
+
+        private void AddToBackpack()
+        {
+            _backpackContents.TryAddWeapon(_currentGameObjectInTrigger.GetComponent<Weapon>());
+
+            ResetCurrentObject();
+        }
+
+        private void TakeFromBackpack()
+        {
+            _backpackContents.TryTakeWeapon(_currentGameObjectInTrigger.GetComponent<Weapon>());
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            var exitingGameObject = other.attachedRigidbody?.gameObject;
+            if ((exitingGameObject == null) || (_currentGameObjectInTrigger != exitingGameObject))
+            {
+                return;
+            }
+
+            TakeFromBackpack();
+            ResetCurrentObject();
+        }
+
+        private void ResetCurrentObject()
+        {
+            if (_currentDragAndDropBehaviour != null)
+            {
+                _currentDragAndDropBehaviour.OnDrop -= OnDropHandler;
+            }
+            _subscribed = false;
+            _currentDragAndDropBehaviour = null;
+            _currentGameObjectInTrigger = null;
+        }
     }
 }
