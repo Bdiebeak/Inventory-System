@@ -1,6 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
 /// <summary>
@@ -9,13 +10,14 @@ using UnityEngine.Serialization;
 /// к которой плавно поднимается объект.
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
-public class DraggableBehaviour : MonoBehaviour
+public class DragAndDropBehaviour : MonoBehaviour
 {
     [Header("Настройки")] 
     [SerializeField]
-    private DraggableBehaviourSettings settings = null;
+    private DragAndDropSettings settings = null;
     
     public bool IsDragged { get; private set; }
+    public event Action OnDrop; 
 
     private float _risingStep = 0;
 
@@ -36,7 +38,6 @@ public class DraggableBehaviour : MonoBehaviour
     private void OnMouseDown()
     {
        TurnOnKinematic();
-       
        IsDragged = true;
     }
 
@@ -52,6 +53,8 @@ public class DraggableBehaviour : MonoBehaviour
         ResetStep();
         
         IsDragged = false;
+        
+        OnDrop?.Invoke();
     }
 
     private void TurnOnKinematic()
