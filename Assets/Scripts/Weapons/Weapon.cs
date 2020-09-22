@@ -1,12 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Weapon", menuName = "Weapons/Create New Weapon")]
-public class Weapon : ScriptableObject
+public class Weapon : MonoBehaviour
 {
-    public new string name;
-    public float weight;
-    public int id;
-    public WeaponType type;
+    public WeaponSettings weaponSettings;
+
+    private void Start()
+    {
+        if (weaponSettings == null)
+        {
+            Debug.LogError($"{gameObject.name} не назначены настройки.");
+        }
+    }
 }
