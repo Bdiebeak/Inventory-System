@@ -1794,6 +1794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ca198f4fbc45594388658108024cb58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  snapSpeed: 5
   snapPoints:
   - {fileID: 6533226951670630800}
   - {fileID: 3741465894358412285}

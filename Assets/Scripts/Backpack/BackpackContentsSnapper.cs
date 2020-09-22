@@ -6,6 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(BackpackContents))]
 public class BackpackContentsSnapper : MonoBehaviour
 {
+    [SerializeField] 
+    private float snapSpeed = 3;
+    
     [SerializeField]
     private Transform[] snapPoints;
 
@@ -37,11 +40,29 @@ public class BackpackContentsSnapper : MonoBehaviour
         
         var weaponTransform = weapon.transform;
         
-        weaponTransform.parent = snapPoints[weapon.GetWeaponTypeIndex()];
         _weapons[weapon.GetWeaponTypeIndex()] = weapon;
+
+        StartCoroutine(SmoothZeroizeTransformCoroutine(weaponTransform, snapPoints[weapon.GetWeaponTypeIndex()]));
+    }
+
+    private IEnumerator SmoothZeroizeTransformCoroutine(Transform objectTransform, Transform newParent)
+    {
+        objectTransform.parent = newParent;
         
-        weaponTransform.localPosition = Vector3.zero;
-        weaponTransform.localEulerAngles = Vector3.zero;
+        while (objectTransform.parent == newParent &&
+               (Vector3.Distance(objectTransform.localPosition, Vector3.zero) > 0.05f ||
+               Quaternion.Angle(objectTransform.localRotation, Quaternion.identity) > 0.01f)) 
+        {
+            objectTransform.localPosition = Vector3.Lerp(objectTransform.localPosition, Vector3.zero, snapSpeed * Time.deltaTime);
+            objectTransform.localRotation = Quaternion.Lerp(objectTransform.localRotation, Quaternion.identity, snapSpeed * Time.deltaTime);
+            
+            yield return null;
+        }
+
+        if (objectTransform.parent != newParent) yield break;
+        
+        objectTransform.localPosition = Vector3.zero;
+        objectTransform.localRotation = Quaternion.identity;
     }
 
     private void UnsnapWeapon(Weapon weapon)
