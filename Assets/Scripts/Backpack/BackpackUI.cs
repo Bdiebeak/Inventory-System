@@ -6,35 +6,84 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Rigidbody), typeof(BackpackContents))]
 public class BackpackUI : MonoBehaviour
 {
     [Tooltip("UI, отображающий содержимое рюкзака.")]
-    public GameObject contentsUI;
+    [SerializeField]
+    private GameObject contentsUI = null;
+
+    [Header("Параметры отображения содержимого")]
+    [Tooltip("Список UI-Image для отображения иконок объектов.")]
+    [SerializeField]
+    private Image[] contentsImages;
+
+    [Tooltip("Иконка, которая будет отображаться в качестве пустого слота оружия.")]
+    [SerializeField] 
+    private Sprite emptyIcon;
     
+    [Header("Параметры активации содержимого")]
     [Tooltip("Image с режимом Filled, отображающее получение доступа к " +
              "содержимому рюкзака при удержании на нем ЛКМ.")]
-    public Image accessBar;
+    [SerializeField]
+    private Image accessBar = null;
     
     [Tooltip("Время, в течении которого нужно удерживать ЛКМ на рюкзаке " +
              "для получения доступа к его содержимому.")]
-    public float timeToAccessContents = 0.5f;
+    [SerializeField]
+    private float timeToAccessContents = 0.5f;
+
+    private readonly int _imagesArraySize = Enum.GetNames(typeof(WeaponType)).Length;
     
     private bool _accessEnabled;
     private float _currentTime;
     private float _requiredTime;
 
+    private BackpackContents _backpackContents;
+
     private GraphicRaycaster _graphicRaycaster;
     private EventSystem _eventSystem;
 
-    private void Start()
+    private void Awake()
     {
+        _backpackContents = GetComponent<BackpackContents>();
+        
         _graphicRaycaster = contentsUI.GetComponent<GraphicRaycaster>();
         if (_graphicRaycaster == null)
         {
             _graphicRaycaster = contentsUI.AddComponent<GraphicRaycaster>();
         }
-
         _eventSystem = FindObjectOfType<EventSystem>();
+    }
+
+    private void OnEnable()
+    {
+        _backpackContents.OnWeaponAdd += WeaponAddHandler;
+        _backpackContents.OnWeaponRemove += WeaponRemoveHandler;
+    }
+
+    private void OnDisable()
+    {
+        _backpackContents.OnWeaponAdd -= WeaponAddHandler;
+        _backpackContents.OnWeaponRemove -= WeaponRemoveHandler;
+    }
+
+    private void WeaponAddHandler(Weapon weapon)
+    {
+        contentsImages[(int) weapon.weaponSettings.type].sprite = weapon.weaponSettings.icon;
+    }
+    
+    private void WeaponRemoveHandler(Weapon weapon)
+    {
+        contentsImages[(int) weapon.weaponSettings.type].sprite = emptyIcon;
+    }
+
+    private void OnValidate()
+    {
+        if (contentsImages.Length != _imagesArraySize)
+        {
+            Array.Resize(ref contentsImages, _imagesArraySize);
+        }
     }
 
     private void OnMouseDown()
@@ -77,7 +126,7 @@ public class BackpackUI : MonoBehaviour
     {
         contentsUI.SetActive(true);
     }
-    
+
     private Button TryFindButton()
     {
         var pointerEventData = new PointerEventData(_eventSystem) {position = Input.mousePosition};
